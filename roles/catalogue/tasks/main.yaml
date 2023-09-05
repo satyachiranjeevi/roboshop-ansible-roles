@@ -7,7 +7,7 @@
     name: common
     tasks_from: nodejs
 
-- name: user creation, app folder creation, download artifacts
+- name: Setup App and folders
   ansible.builtin.import_role:
     name: common
     tasks_form: app-setup
