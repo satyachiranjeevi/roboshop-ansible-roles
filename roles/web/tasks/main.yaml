@@ -1,0 +1,44 @@
+--- # start of the yaml
+- name: install nginx
+  become: yes # sudo acces to create user
+  ansible.builtin.yum:
+    name: nginx
+    state: installed
+- name: enable and start web 
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes
+    
+- name: remove html directory 
+  ansible.builtin.file:
+    path: /usr/share/nginx/html
+    state: absent
+
+- name: create html directory
+  ansible.builtin.file:
+    path: /usr/share/nginx/html
+    state: directory
+
+- name: download web artifacts
+  ansible.builtin.get_url: 
+    url: https://roboshop-builds.s3.amazonaws.com/web.zip
+    dest: /tmp
+
+- name: extract web  artifacts file
+  ansible.builtin.unarchive:
+    src: /tmp/web.zip
+    dest: /usr/share/nginx/html
+    remote_src: yes
+
+- name: copy roboshop.conf file
+  ansible.builtin.copy:
+    src: roboshop.conf
+    dest: /etc/nginx/default.d/roboshop.conf
+
+- name: start & enable nginx  service
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
+    enabled: yes
+... # end of the yaml
