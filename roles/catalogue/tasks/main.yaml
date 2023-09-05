@@ -10,5 +10,5 @@
 - name: Setup App and folders
   ansible.builtin.import_role:
     name: common
-    tasks_form: app-setup
+    tasks_from: app-setup
 
