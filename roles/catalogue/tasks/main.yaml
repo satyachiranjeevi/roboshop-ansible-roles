@@ -2,3 +2,13 @@
 # catalogue, common are roles
 # import nodejs.yaml into catalogue main.yaml
 
+- name: install nodejs
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: nodejs
+
+- name: user creation, app folder creation, download artifacts
+  ansible.builtin.import_role:
+    name: common
+    tasks_form: app-setup
+
