@@ -1,0 +1,21 @@
+--- # start of the yaml
+- name: install nodejs
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: nodejs
+
+- name: app setup
+  import_role:
+    name: common
+    tasks_from: app-setup
+
+- name: change directory and install npm packages
+  ansible.builtin.command: npm install
+  args:
+    chdir: /app
+
+- name: systemd setup
+  import_role:
+    name: common
+    tasks_from: systemd-setup
+... # end of the yaml
