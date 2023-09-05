@@ -1,26 +1,23 @@
 --- # start of the yaml
-- name: install mysql on linux server
-  hosts: mysql
-  become: yes
-  tasks:
-  - name: disable mysql package
-    ansible.builtin.command: yum module disable mysql -y
+- name: disable mysql package
+  ansible.builtin.command: yum module disable mysql -y
 
-  - name: setup mysql repo file
-    ansible.builtin.copy:
-      src: mysql.repo
-      dest: /etc/yum.repos.d/mysql.repo
-  
-  - name: install mysql server
-    ansible.builtin.yum:
-      name: mysql-community-server
-      state: installed
+- name: setup mysql repo file
+  ansible.builtin.copy:
+    src: mysql.repo
+    dest: /etc/yum.repos.d/mysql.repo
 
-  - name: start & enable mysql server
-    ansible.builtin.service:
-      name: mysqld
-      state: started
-      enabled: true
+- name: install mysql server
+  ansible.builtin.yum:
+    name: mysql-community-server
+    state: installed
 
-  - name: setup mysql root password
-    ansible.builtin.command: mysql_secure_installation --set-root-pass RoboShop@1
+- name: start & enable mysql server
+  ansible.builtin.service:
+    name: mysqld
+    state: started
+    enabled: true
+
+- name: setup mysql root password
+  ansible.builtin.command: mysql_secure_installation --set-root-pass RoboShop@1
+... # End of the yaml
